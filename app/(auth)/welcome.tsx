@@ -5,11 +5,23 @@ import { router } from 'expo-router';
 import Swiper from 'react-native-swiper';
 import { onboarding } from '@/constants';
 import CustomButton from '@/components/CustomBtn';
+import { useQuery } from '@tanstack/react-query';
 
 const welcome = () => {
   const swiperRef = useRef<Swiper>(null);
   const [activeIndex, setActiveIndex] = useState<number>();
 
+  const { data, isError, error, isLoading } = useQuery({
+    queryKey: ['todos'],
+    queryFn: () =>
+      fetch('https://jsonplaceholder.typicode.com/todos').then((response) =>
+        response.json()
+      ),
+  });
+  console.log('🚀 ~ welco:', {
+    isError,
+    isLoading,
+  });
   const isLastSlide = activeIndex === onboarding.length - 1;
   return (
     <SafeAreaView className="flex h-full items-center justify-between bg-white">
