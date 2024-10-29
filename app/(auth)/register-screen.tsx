@@ -4,6 +4,7 @@ import { icons, images } from '@/constants';
 import InputField from '@/components/InputField';
 import CustomButton from '@/components/CustomBtn';
 import { Link } from 'expo-router';
+import OAuth from '@/components/OAuth';
 
 const RegisterScreen = () => {
   const [form, setForm] = useState({
@@ -13,6 +14,7 @@ const RegisterScreen = () => {
   });
   const handleRegister = async () => {
     try {
+      //TODO handle register with email and pass
     } catch (error) {
       console.log('🚀 ~ handleRegister ~ error:', error);
     }
@@ -42,14 +44,14 @@ const RegisterScreen = () => {
           label="Email"
           placeHolder="Enter your email"
           icon={icons.email}
-          value={form.name}
+          value={form.email}
           onChangeText={(value: string) => setForm({ ...form, email: value })}
         />
         <InputField
           label="Password"
           placeHolder="Enter your Password"
           icon={icons.lock}
-          value={form.name}
+          value={form.password}
           secureTextEntry
           onChangeText={(value: string) =>
             setForm({ ...form, password: value })
@@ -62,8 +64,7 @@ const RegisterScreen = () => {
           className="mt-6 "
         />
 
-        {/* TODO oauth with google */}
-        {/* <OAuth /> */}
+        <OAuth />
 
         <Link
           href={'/(auth)/login'}
