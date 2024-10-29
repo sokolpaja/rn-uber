@@ -36,8 +36,8 @@ const welcome = () => {
       <Swiper
         ref={swiperRef}
         loop={false}
-        dot={<View className="w-8 h-1 mx-1 bg-blue-100" />}
-        activeDot={<View className="w-8 h-1 mx-1 bg-blue-500" />}
+        dot={<View className="w-8 h-1 mx-1 bg-blue-100 rounded" />}
+        activeDot={<View className="w-8 h-1 mx-1 bg-blue-500 rounded" />}
         onIndexChanged={(idx) => setActiveIndex(idx)}>
         {onboarding.map((item) => (
           <View

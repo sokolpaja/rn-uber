@@ -5,6 +5,7 @@ import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
 import 'react-native-reanimated';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { useReactQueryDevTools } from '@dev-plugins/react-query';
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -21,7 +22,8 @@ export default function MainLayout() {
   });
 
   const queryClient = new QueryClient();
-
+  // TODO check devtools
+  useReactQueryDevTools(queryClient);
   useEffect(() => {
     if (loaded) {
       SplashScreen.hideAsync();
