@@ -8,19 +8,11 @@ const home = () => {
   const { user } = useUser();
 
   return (
-    <View>
+    <SafeAreaView>
       <SignedIn>
         <Text>Hello {user?.emailAddresses[0].emailAddress}</Text>
       </SignedIn>
-      <SignedOut>
-        <Link href="/(auth)/login">
-          <Text>Login In</Text>
-        </Link>
-        <Link href="/(auth)/register-screen">
-          <Text>Register</Text>
-        </Link>
-      </SignedOut>
-    </View>
+    </SafeAreaView>
   );
 };
 
