@@ -36,6 +36,7 @@ const LoginScreen = () => {
           label="Email"
           placeHolder="Enter your email"
           icon={icons.email}
+          keyboardType="email-address"
           value={form.email}
           onChangeText={(value: string) => setForm({ ...form, email: value })}
         />

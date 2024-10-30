@@ -6,6 +6,7 @@ import { useEffect } from 'react';
 import 'react-native-reanimated';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { useReactQueryDevTools } from '@dev-plugins/react-query';
+import { ClerkProvider, ClerkLoaded } from '@clerk/clerk-expo';
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -20,6 +21,7 @@ export default function MainLayout() {
     'Jakarta-Regular': require('../assets/fonts/PlusJakartaSans-Regular.ttf'),
     'Jakarta-SemiBold': require('../assets/fonts/PlusJakartaSans-SemiBold.ttf'),
   });
+  const publishableKey = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY!;
 
   const queryClient = new QueryClient();
   // TODO check devtools
@@ -30,18 +32,28 @@ export default function MainLayout() {
     }
   }, [loaded]);
 
+  if (!publishableKey) {
+    throw new Error(
+      'Missing Publishable Key. Please set EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY in your .env'
+    );
+  }
+
   if (!loaded) {
     return null;
   }
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <Stack>
-        <Stack.Screen name="index" options={{ headerShown: false }} />
-        <Stack.Screen name="(root)" options={{ headerShown: false }} />
-        <Stack.Screen name="(auth)" options={{ headerShown: false }} />
-        <Stack.Screen name="+not-found" />
-      </Stack>
-    </QueryClientProvider>
+    <ClerkProvider publishableKey={publishableKey}>
+      <ClerkLoaded>
+        <QueryClientProvider client={queryClient}>
+          <Stack>
+            <Stack.Screen name="index" options={{ headerShown: false }} />
+            <Stack.Screen name="(root)" options={{ headerShown: false }} />
+            <Stack.Screen name="(auth)" options={{ headerShown: false }} />
+            <Stack.Screen name="+not-found" />
+          </Stack>
+        </QueryClientProvider>
+      </ClerkLoaded>
+    </ClerkProvider>
   );
 }
